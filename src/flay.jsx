@@ -1,37 +1,16 @@
+// flay.jsx
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
-import {
-  ArrowPathIcon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-} from '@heroicons/react/24/outline'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
 
-const solutions = [
-  { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
-  { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
-  { name: 'Security', description: "Your customers' data will be safe and secure", href: '#', icon: FingerPrintIcon },
-  { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-  { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
-]
-const callsToAction = [
-  { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact sales', href: '#', icon: PhoneIcon },
-]
-
-export default function Flay() {
+export default function Flay({name, solutions = [], callsToAction = [] }) {
   return (
     <Popover className="relative">
-      <PopoverButton className="w-2xl inline-flex items-center gap-x-1 text-sm/6 font-semibold text-white  w-2xl m-2.5 p-2  bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg shadow-lg ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition duration-300 ease-in-out">
-        <span>Solutions</span>
+      <PopoverButton className="w-2xl inline-flex items-center gap-x-1 text-sm/6 font-semibold text-white m-2.5 p-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg shadow-lg ring-1 ring-gray-900/5 hover:ring-gray-900/10 transition duration-300 ease-in-out">
+        <span>{name}</span>
         <ChevronDownIcon aria-hidden="true" className="size-10" />
       </PopoverButton>
 
-      <PopoverPanel
-        transition
-        className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
-      >
+      <PopoverPanel className="absolute left-1/2 z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
         <div className="w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm/6 shadow-lg ring-1 ring-gray-900/5">
           <div className="p-4">
             {solutions.map((item) => (
@@ -39,30 +18,18 @@ export default function Flay() {
                 <div className="mt-1 flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                   <item.icon aria-hidden="true" className="size-6 text-gray-600 group-hover:text-indigo-600" />
                 </div>
-                <div>
-                  <a href={item.href} className="font-semibold text-gray-900">
+                <div className="flex justify-between w-full items-center gap-2">
+                  <a href={item.href} className="relative z-10 font-semibold text-gray-900 after:content-['..................................................................................'] after:flex-1 after:ml-2 after:overflow-hidden after:whitespace-nowrap after:text-gray-400 after:text-ellipsis after:block">
                     {item.name}
-                    <span className="absolute inset-0" />
                   </a>
-                  <p className="mt-1 text-gray-600">{item.description}</p>
+                  <span className="text-gray-900 whitespace-nowrap">{item.price}</span>
                 </div>
+
               </div>
-            ))}
-          </div>
-          <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
-            {callsToAction.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100"
-              >
-                <item.icon aria-hidden="true" className="size-5 flex-none text-gray-400" />
-                {item.name}
-              </a>
             ))}
           </div>
         </div>
       </PopoverPanel>
     </Popover>
-  )
+  );
 }
